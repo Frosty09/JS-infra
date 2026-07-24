@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JS Infra Group | Foundation of Your Future</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#8B6914;--black:#0A0A0A;--dark:#111111;--dark2:#1A1A1A;--dark3:#222222;--white:#FFFFFF;--muted:#888888;}
+*{margin:0;padding:0;box-sizing:border-box;}html{scroll-behavior:smooth;}
+body{font-family:'Montserrat',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--gold);}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:rgba(10,10,10,0.97);border-bottom:1px solid rgba(201,168,76,0.2);backdrop-filter:blur(10px);}
+.nav-logo img{height:44px;object-fit:contain;}
+.nav-links{display:none;gap:24px;list-style:none;}
+.nav-links a{color:#ccc;text-decoration:none;font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.3s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-call{color:var(--gold);text-decoration:none;font-size:11px;font-weight:700;border:1px solid var(--gold);padding:8px 16px;border-radius:2px;transition:all 0.3s;white-space:nowrap;}
+.nav-call:hover{background:var(--gold);color:var(--black);}
+.hamburger{display:flex;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;}
+.hamburger span{display:block;width:22px;height:2px;background:var(--gold);}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:#0A0A0A;border-bottom:1px solid rgba(201,168,76,0.2);z-index:999;padding:16px 24px;flex-direction:column;gap:0;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{color:#ccc;text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;background:#0A0A0A;}
+.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,#0A0A0A 0%,#0f0d00 50%,#0A0A0A 100%);}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(201,168,76,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(201,168,76,0.04) 1px,transparent 1px);background-size:60px 60px;}
+.hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(201,168,76,0.1) 0%,transparent 70%);border-radius:50%;}
+.hero-content{position:relative;z-index:2;padding:120px 24px 80px;max-width:800px;}
+.hero-badge{display:inline-block;border:1px solid rgba(201,168,76,0.4);color:var(--gold);font-size:9px;letter-spacing:3px;padding:6px 16px;text-transform:uppercase;margin-bottom:24px;border-radius:1px;}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(56px,12vw,110px);font-weight:700;line-height:0.9;color:#fff;margin-bottom:10px;}
+.hero h1 span{background:linear-gradient(135deg,var(--gold-light),var(--gold),var(--gold-dark));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-tag{font-family:'Cormorant Garamond',serif;font-size:clamp(16px,3vw,22px);color:var(--gold-light);font-style:italic;letter-spacing:2px;margin:16px 0 8px;}
+.hero-sub{font-size:10px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin-bottom:40px;}
+.hero-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 36px;}
+.hero-stats{display:flex;justify-content:center;gap:32px;margin-bottom:40px;flex-wrap:wrap;}
+.hero-stat h3{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;color:var(--gold);line-height:1;}
+.hero-stat span{font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;display:block;margin-top:4px;}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-gold{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--black);padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:all 0.3s;border:none;cursor:pointer;display:inline-block;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,0.4);}
+.btn-outline{border:1px solid var(--gold);color:var(--gold);padding:14px 28px;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:all 0.3s;background:transparent;cursor:pointer;display:inline-block;}
+.btn-outline:hover{background:var(--gold);color:var(--black);transform:translateY(-2px);}
+.sec-label{font-size:9px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:10px;font-weight:600;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,6vw,50px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:14px;}
+.sec-title span{background:linear-gradient(135deg,var(--gold-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.gold-line{width:50px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin-bottom:24px;}
+.conn-strip{background:var(--dark);border-top:1px solid rgba(201,168,76,0.2);border-bottom:1px solid rgba(201,168,76,0.2);padding:20px 24px;text-align:center;}
+.conn-title{font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:14px;font-weight:600;}
+.conn-items{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 18px;}
+.conn-item{font-size:11px;color:#ccc;}
+.avs-spotlight{background:var(--dark);}
+.avs-img-wrap{position:relative;height:60vw;max-height:460px;overflow:hidden;}
+.avs-img-wrap img{width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(0.7);}
+.avs-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(10,10,10,0.95) 100%);}
+.avs-badge{position:absolute;top:14px;left:14px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--black);font-size:9px;letter-spacing:2px;padding:5px 12px;font-weight:700;text-transform:uppercase;border-radius:1px;}
+.avs-body{padding:28px 24px 48px;}
+.avs-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;color:#fff;margin-bottom:6px;}
+.avs-loc{font-size:11px;color:var(--gold);letter-spacing:1px;margin-bottom:14px;}
+.avs-desc{font-size:13px;color:#aaa;line-height:1.7;margin-bottom:20px;}
+.avs-feats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px;}
+.avs-feat{font-size:12px;color:#ccc;display:flex;align-items:center;gap:6px;}
+.avs-feat::before{content:'◆';color:var(--gold);font-size:7px;flex-shrink:0;}
+.portfolio-sec{background:var(--black);padding:60px 24px;}
+.cat-tabs{display:flex;border:1px solid rgba(201,168,76,0.25);border-radius:2px;overflow:hidden;margin-bottom:28px;}
+.cat-btn{flex:1;padding:12px 6px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;cursor:pointer;background:var(--dark2);color:var(--muted);transition:all 0.3s;}
+.cat-btn.active{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--black);}
+.cat-content{display:none;}
+.cat-content.active{display:block;}
+.proj-grid{display:grid;gap:16px;}
+.proj-card{background:var(--dark2);border:1px solid rgba(201,168,76,0.15);border-radius:2px;overflow:hidden;transition:all 0.3s;}
+.proj-card:hover{border-color:rgba(201,168,76,0.4);transform:translateY(-4px);}
+.proj-img-wrap{position:relative;overflow:hidden;}
+.proj-img{width:100%;height:50vw;max-height:240px;object-fit:cover;object-position:center;filter:brightness(0.85);transition:transform 0.4s;}
+.proj-card:hover .proj-img{transform:scale(1.04);}
+.proj-badge{position:absolute;top:12px;left:12px;background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--black);font-size:8px;letter-spacing:1.5px;padding:4px 10px;font-weight:700;text-transform:uppercase;border-radius:1px;}
+.proj-body{padding:20px;}
+.proj-body h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;margin-bottom:4px;}
+.proj-loc{font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:10px;}
+.proj-body p{font-size:12px;color:#999;line-height:1.6;margin-bottom:14px;}
+.proj-feats{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:16px;}
+.proj-feats li{font-size:10px;color:#bbb;display:flex;align-items:center;gap:5px;}
+.proj-feats li::before{content:'◆';color:var(--gold);font-size:6px;}
+.coming-soon{text-align:center;padding:50px 20px;background:var(--dark2);border:1px solid rgba(201,168,76,0.15);border-radius:2px;}
+.coming-soon h3{font-family:'Cormorant Garamond',serif;font-size:26px;color:#fff;margin-bottom:8px;}
+.coming-soon p{font-size:12px;color:#888;margin-bottom:20px;}
+.benefits-sec{background:linear-gradient(135deg,#0d0d00,#111100,#0a0a0a);padding:60px 24px;text-align:center;border-top:1px solid rgba(201,168,76,0.2);border-bottom:1px solid rgba(201,168,76,0.2);}
+.ben-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:28px;}
+.ben-item{background:rgba(201,168,76,0.05);border:1px solid rgba(201,168,76,0.15);padding:16px 14px;border-radius:2px;text-align:left;transition:all 0.3s;}
+.ben-item:hover{background:rgba(201,168,76,0.1);border-color:rgba(201,168,76,0.3);}
+.ben-icon{font-size:20px;margin-bottom:8px;}
+.ben-item p{font-size:11px;color:#bbb;line-height:1.6;}
+.team-sec{background:var(--dark);padding:60px 24px;}
+.team-cards{display:grid;gap:20px;}
+.team-card{background:var(--dark2);border:1px solid rgba(201,168,76,0.15);border-radius:2px;overflow:hidden;transition:all 0.3s;}
+.team-card:hover{border-color:rgba(201,168,76,0.35);}
+
+/* FIXED PHOTO STYLING */
+.team-photo-wrap{width:100%;height:320px;overflow:hidden;position:relative;}
+.team-photo{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+
+.team-info{padding:22px 20px;}
+.team-info h3{font-family:'Cormorant Garamond',serif;font-size:24px;color:#fff;margin-bottom:4px;}
+.team-role{font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+.team-info p{font-size:12px;color:#888;line-height:1.7;}
+.team-tag{display:inline-block;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);color:var(--gold);font-size:9px;letter-spacing:1.5px;padding:4px 10px;margin-top:12px;border-radius:1px;text-transform:uppercase;}
+.contact-sec{background:var(--black);padding:60px 24px;}
+.contact-info{margin-bottom:28px;}
+.cdet{display:flex;gap:12px;margin-bottom:12px;align-items:flex-start;}
+.cdet span{font-size:16px;flex-shrink:0;margin-top:1px;}
+.cdet p{font-size:12px;color:#aaa;line-height:1.6;}
+.cdet a{color:var(--gold);text-decoration:none;}
+.form-box{background:var(--dark2);border:1px solid rgba(201,168,76,0.2);padding:26px 20px;border-radius:2px;}
+.form-box h3{font-family:'Cormorant Garamond',serif;font-size:24px;color:#fff;margin-bottom:4px;}
+.form-sub{font-size:11px;color:var(--muted);margin-bottom:20px;}
+.fg{margin-bottom:12px;}
+.fg label{display:block;font-size:10px;color:var(--gold);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;font-weight:600;}
+.fg input,.fg textarea{width:100%;background:var(--dark3);border:1px solid rgba(201,168,76,0.2);color:#fff;padding:12px 14px;font-size:12px;font-family:'Montserrat',sans-serif;border-radius:2px;outline:none;transition:border-color 0.3s;}
+.fg input:focus,.fg textarea:focus{border-color:var(--gold);}
+.success-msg{background:rgba(201,168,76,0.08);border:1px solid var(--gold);color:var(--gold);padding:12px;font-size:12px;border-radius:2px;text-align:center;margin-top:12px;display:none;}
+.partner-sec{background:var(--dark);padding:60px 24px;}
+.partner-intro{background:linear-gradient(135deg,rgba(201,168,76,0.08),rgba(201,168,76,0.03));border:1px solid rgba(201,168,76,0.25);border-radius:2px;padding:30px 20px;text-align:center;margin-bottom:28px;}
+.partner-intro h3{font-family:'Cormorant Garamond',serif;font-size:24px;color:#fff;margin-bottom:10px;}
+.partner-intro p{font-size:12px;color:#aaa;line-height:1.7;margin-bottom:18px;}
+.pb-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:28px;}
+.pb-card{background:var(--dark2);border:1px solid rgba(201,168,76,0.12);padding:18px 16px;border-radius:2px;}
+.pb-icon{font-size:22px;margin-bottom:8px;}
+.pb-card h4{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--gold);margin-bottom:6px;}
+.pb-card p{font-size:11px;color:#888;line-height:1.5;}
+.contest-box{background:linear-gradient(135deg,#1a1000,#111100);border:1px solid rgba(201,168,76,0.25);border-radius:2px;padding:28px 20px;text-align:center;margin-bottom:28px;}
+.contest-box h3{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold);margin-bottom:10px;}
+.contest-box p{font-size:12px;color:#ccc;line-height:1.7;margin-bottom:18px;}
+.rewards{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;}
+.reward{background:rgba(201,168,76,0.12);border:1px solid var(--gold);color:var(--gold);padding:7px 14px;border-radius:20px;font-size:11px;font-weight:600;}
+.reward.soon{background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.12);color:#999;}
+footer{background:#050505;border-top:1px solid rgba(201,168,76,0.2);padding:48px 24px 24px;}
+.footer-logo img{height:44px;margin-bottom:12px;}
+.footer-logo p{font-size:11px;color:#666;line-height:1.7;margin-bottom:16px;}
+.social-links{display:flex;gap:10px;margin-bottom:28px;}
+.social-link{width:34px;height:34px;border:1px solid rgba(201,168,76,0.25);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);text-decoration:none;font-size:12px;font-weight:700;transition:all 0.3s;}
+.social-link:hover{background:var(--gold);color:var(--black);}
+.footer-cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:28px;}
+.footer-col h4{font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;font-weight:600;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:7px;}
+.footer-col ul li a{font-size:11px;color:#666;text-decoration:none;transition:color 0.3s;}
+.footer-col ul li a:hover{color:var(--gold);}
+.footer-col p{font-size:11px;color:#666;line-height:1.8;}
+.footer-col a{color:var(--gold);text-decoration:none;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:16px;text-align:center;}
+.footer-bottom p{font-size:10px;color:#444;line-height:1.7;}
+.footer-bottom span{color:var(--gold);}
+.float-wa{position:fixed;bottom:24px;right:24px;z-index:999;background:#25D366;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,0.4);text-decoration:none;transition:transform 0.3s;}
+.float-wa:hover{transform:scale(1.1);}
+.float-wa svg{width:26px;height:26px;fill:white;}
+.float-call{position:fixed;bottom:88px;right:24px;z-index:999;background:linear-gradient(135deg,var(--gold-light),var(--gold));width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(201,168,76,0.4);text-decoration:none;font-size:20px;transition:transform 0.3s;}
+.float-call:hover{transform:scale(1.1);}
+.popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);padding:24px;}
+.popup-overlay.active{display:flex;}
+.popup-box{background:var(--dark2);border:1px solid rgba(201,168,76,0.35);padding:32px 24px;border-radius:4px;max-width:400px;width:100%;position:relative;animation:popIn 0.35s ease;}
+@keyframes popIn{from{opacity:0;transform:scale(0.9) translateY(16px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.popup-close{position:absolute;top:12px;right:14px;color:var(--muted);font-size:20px;cursor:pointer;background:none;border:none;}
+.popup-close:hover{color:var(--gold);}
+.popup-label{font-size:9px;letter-spacing:3px;color:var(--gold);text-transform:uppercase;margin-bottom:8px;font-weight:600;}
+.popup-box h3{font-family:'Cormorant Garamond',serif;font-size:24px;color:#fff;margin-bottom:6px;line-height:1.2;}
+.popup-sub{font-size:11px;color:var(--muted);margin-bottom:18px;line-height:1.6;}
+@media(min-width:768px){
+  nav{padding:14px 60px;}.nav-links{display:flex!important;}.hamburger{display:none!important;}
+  .avs-img-wrap{height:400px;max-height:none;}.avs-feats{grid-template-columns:repeat(3,1fr);}
+  .portfolio-sec,.team-sec,.partner-sec,.contact-sec,.benefits-sec{padding:80px 60px;}
+  .proj-grid{grid-template-columns:repeat(2,1fr);}.ben-grid{grid-template-columns:repeat(4,1fr);}
+  .team-cards{grid-template-columns:repeat(2,1fr);}
+  .team-photo-wrap{height:380px;}
+  .contact-sec{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}.contact-info{margin-bottom:0;}
+  .pb-grid{grid-template-columns:repeat(3,1fr);}.footer-cols{grid-template-columns:repeat(3,1fr);}
+  .cat-btn{font-size:11px;padding:13px 16px;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="nav-logo"><img src="https://raw.githubusercontent.com/Frosty09/JS-infra/main/logo.png" alt="JS Infra Group"></div>
+  <ul class="nav-links">
+    <li><a href="#home" onclick="closeMobile()">Home</a></li>
+    <li><a href="#portfolio" onclick="closeMobile()">Portfolio</a></li>
+    <li><a href="#team" onclick="closeMobile()">Our Team</a></li>
+    <li><a href="#contact" onclick="closeMobile()">Contact</a></li>
+    <li><a href="#partnership" onclick="closeMobile()">Partner With Us</a></li>
+  </ul>
+  <a href="tel:+917877529834" class="nav-call">📞 Call Us</a>
+  <button class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#portfolio" onclick="closeMobile()">Portfolio</a>
+  <a href="#team" onclick="closeMobile()">Our Team</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+  <a href="#partnership" onclick="closeMobile()">Partner With Us</a>
+</div>
+
+<section class="hero" id="home">
+  <div class="hero-bg"></div><div class="hero-grid"></div><div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Registered in Uttar Pradesh &nbsp;|&nbsp; Trusted Since 2019</div>
+    <h1>JS <span>INFRA</span><br>GROUP</h1>
+    <div class="hero-tag">Foundation of Your Future</div>
+    <div class="hero-sub">Developer &nbsp;•&nbsp; Consultant &nbsp;•&nbsp; Investment Partner</div>
+    <div class="hero-divider"></div>
+    <div class="hero-stats">
+      <div class="hero-stat"><h3>5+</h3><span>Years Experience</span></div>
+      <div class="hero-stat"><h3>100+</h3><span>Happy Investors</span></div>
+      <div class="hero-stat"><h3>3</h3><span>Projects</span></div>
+      <div class="hero-stat"><h3>50+</h3><span>Partners</span></div>
+    </div>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-gold">Book a Site Visit</a>
+      <a href="#partnership" class="btn-outline">Become a Partner</a>
+    </div>
+  </div>
+</section>
+
+<div class="conn-strip">
+  <div class="conn-title">📍 Where Great Connectivity Meets World-Class Infrastructure</div>
+  <div class="conn-items">
+    <span class="conn-item">🛫 Noida International Airport, Jewar</span>
+    <span class="conn-item">🛣️ Yamuna Expressway</span>
+    <span class="conn-item">💻 Electronics Cluster & Data Centre Zone</span>
+    <span class="conn-item">🏎️ F1 Circuit & Upcoming Metro</span>
+    <span class="conn-item">🎬 Film City & Fintech Hub</span>
+    <span class="conn-item">🏫 Gaurs International School</span>
+    <span class="conn-item">🧸 Toy City & Medical Device Park</span>
+    <span class="conn-item">🕉️ India's Tallest Krishna Statue at GYC</span>
+  </div>
+</div>
+
+<section class="avs-spotlight" id="avs">
+  <div class="avs-img-wrap">
+    <img src="https://raw.githubusercontent.com/Frosty09/JS-infra/main/avs-city.jpg" alt="AVS City Township">
+    <div class="avs-overlay"></div>
+    <div class="avs-badge">⭐ Featured Project</div>
+  </div>
+  <div class="avs-body">
+    <div class="sec-label">Our Best Project</div>
+    <div class="avs-title">AVS City</div>
+    <div class="avs-loc">📍 Sector 17B, Dankaur, Greater Noida</div>
+    <p class="avs-desc">A 33 Bigha gated township close to the Yamuna Expressway and Noida International Airport. Approved by Dankaur Nagar Nigam — safe, well planned, and ready for the future.</p>
+    <div class="avs-feats">
+      <div class="avs-feat">Registry Ready Plots</div>
+      <div class="avs-feat">Gated with 24x7 Security</div>
+      <div class="avs-feat">25ft & 20ft Wide Roads</div>
+      <div class="avs-feat">Park, GYM & Temple</div>
+      <div class="avs-feat">Commercial Shops</div>
+      <div class="avs-feat">Nagar Nigam Approved</div>
+    </div>
+    <a href="https://wa.me/917877529834?text=I am interested in AVS City, Dankaur" class="btn-gold">Ask on WhatsApp</a>
+  </div>
+</section>
+
+<section class="portfolio-sec" id="portfolio">
+  <div class="sec-label">What We Offer</div>
+  <h2 class="sec-title">Our <span>Portfolio</span></h2>
+  <div class="gold-line"></div>
+  <div class="cat-tabs">
+    <button class="cat-btn active" onclick="switchCat('plots',this)">Land / Plots</button>
+    <button class="cat-btn" onclick="switchCat('flats',this)">Flats / High Rise</button>
+    <button class="cat-btn" onclick="switchCat('villas',this)">Villas / Pre-Built</button>
+  </div>
+  <div class="cat-content active" id="cat-plots">
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-img-wrap">
+          <img src="https://raw.githubusercontent.com/Frosty09/JS-infra/main/avs-city.jpg" alt="AVS City" class="proj-img">
+          <div class="proj-badge">Featured</div>
+        </div>
+        <div class="proj-body">
+          <h3>AVS City</h3>
+          <div class="proj-loc">📍 Sector 17B, Dankaur, Greater Noida</div>
+          <p>Registry ready plots in a 33 Bigha gated township. Approved by Nagar Nigam — a safe investment near Jewar Airport.</p>
+          <ul class="proj-feats"><li>Registry Ready</li><li>Gated Entry</li><li>Wide Roads</li><li>Park & GYM</li><li>Commercial Zone</li><li>Approved</li></ul>
+          <a href="https://wa.me/917877529834?text=I am interested in AVS City plots" class="btn-gold" style="width:100%;text-align:center;display:block">Enquire Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-content" id="cat-flats">
+    <div class="proj-grid">
+      <div class="proj-card">
+        <div class="proj-img-wrap">
+          <img src="https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=700&q=80" alt="Gaur Chrysalis" class="proj-img">
+          <div class="proj-badge">Premium</div>
+        </div>
+        <div class="proj-body">
+          <h3>Gaur Chrysalis</h3>
+          <div class="proj-loc">📍 Sector 22D, Yamuna Expressway</div>
+          <p>Luxury 3 & 4 BHK apartments by Gaursons Group — part of the 250-acre Gaur Yamuna City. World-class amenities near Jewar Airport.</p>
+          <ul class="proj-feats"><li>3 & 4 BHK Flats</li><li>250-Acre Township</li><li>Clubhouse & Pool</li><li>RERA Registered</li><li>Near Airport</li><li>By Gaursons</li></ul>
+          <a href="https://wa.me/917877529834?text=I am interested in Gaur Chrysalis" class="btn-gold" style="width:100%;text-align:center;display:block">Enquire Now</a>
+        </div>
+      </div>
+      <div class="proj-card">
+        <div class="proj-img-wrap">
+          <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=700&q=80" alt="Nimbus The Palm Village" class="proj-img">
+          <div class="proj-badge">New Launch</div>
+        </div>
+        <div class="proj-body">
+          <h3>Nimbus The Palm Village</h3>
+          <div class="proj-loc">📍 Sector 22A, Yamuna Expressway</div>
+          <p>Modern 2 & 3 BHK homes in a green, well-planned community. Great for families and investors alike.</p>
+          <ul class="proj-feats"><li>2 & 3 BHK Flats</li><li>Green Community</li><li>Good Amenities</li><li>Yamuna Expressway</li><li>Near Airport</li><li>Family Friendly</li></ul>
+          <a href="https://wa.me/917877529834?text=I am interested in Nimbus Palm Village" class="btn-gold" style="width:100%;text-align:center;display:block">Enquire Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-content" id="cat-villas">
+    <div class="coming-soon">
+      <div style="font-size:44px;margin-bottom:14px">🏡</div>
+      <h3>Coming Soon</h3>
+      <p>Premium villas and pre-constructed properties are on the way. Leave your details and we will let you know first!</p>
+      <a href="https://wa.me/917877529834?text=I want updates on upcoming villas" class="btn-gold">Notify Me</a>
+    </div>
+  </div>
+</section>
+
+<section class="benefits-sec">
+  <div class="sec-label" style="text-align:center">Location Advantage</div>
+  <h2 class="sec-title" style="text-align:center">Why <span>These Regions?</span></h2>
+  <div class="gold-line" style="margin:0 auto 8px"></div>
+  <p style="text-align:center;font-size:11px;color:#777;margin-bottom:4px">Yamuna Expressway / Jewar &nbsp;•&nbsp; Goverdhan / Vrindavan &nbsp;•&nbsp; Dholera</p>
+  <div class="ben-grid">
+    <div class="ben-item"><div class="ben-icon">🛫</div><p>Noida International Airport, Jewar — Asia's biggest upcoming airport</p></div>
+    <div class="ben-item"><div class="ben-icon">🛣️</div><p>Direct access via Yamuna Expressway — connects NCR to Agra</p></div>
+    <div class="ben-item"><div class="ben-icon">💻</div><p>Electronics Cluster & Data Centre Zone nearby</p></div>
+    <div class="ben-item"><div class="ben-icon">🏎️</div><p>F1 Circuit & Metro coming soon</p></div>
+    <div class="ben-item"><div class="ben-icon">🎬</div><p>International Film City (1000 acres) under development</p></div>
+    <div class="ben-item"><div class="ben-icon">🕉️</div><p>Goverdhan / Vrindavan — growing spiritual & tourism destination</p></div>
+    <div class="ben-item"><div class="ben-icon">🏗️</div><p>Dholera Smart City — India's first greenfield smart city, Gujarat</p></div>
+    <div class="ben-item"><div class="ben-icon">📈</div><p>YEIDA planned area — clear land titles and organised layouts</p></div>
+  </div>
+</section>
+
+<section class="team-sec" id="team">
+  <div class="sec-label">The People Behind It</div>
+  <h2 class="sec-title">Our <span>Team</span></h2>
+  <div class="gold-line"></div>
+  <div class="team-cards">
+    <div class="team-card">
+      <div class="team-photo-wrap">
+        <img src="https://raw.githubusercontent.com/Frosty09/JS-infra/main/kapil.jpg" alt="Kapil Nagar" class="team-photo">
+      </div>
+      <div class="team-info">
+        <h3>Kapil Nagar</h3>
+        <div class="team-role">Founder & Legal Head</div>
+        <p>Kapil is a Lawyer with 7+ years of experience in property dealings. Having personally faced a fraudulent deal, he built JS Infra Group to make sure every buyer is fully protected. Every property we offer must be legally safe and clear.</p>
+        <span class="team-tag">Lawyer | 7+ Years in Property</span>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-photo-wrap">
+        <img src="https://raw.githubusercontent.com/Frosty09/JS-infra/main/tanuj.png" alt="Tanuj Sharma" class="team-photo">
+      </div>
+      <div class="team-info">
+        <h3>Tanuj Sharma</h3>
+        <div class="team-role">Co-Founder & Business Head</div>
+        <p>Tanuj comes from a Portfolio Advisory background and brings a smart, data-driven approach to real estate. He knows how to spot high-value properties before the market does. His focus is on long-term value for investors and strong business partnerships.</p>
+        <span class="team-tag">Portfolio Advisor | Business Strategist</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT - Exact fields from Google Form: Name, Phone number*, Your interest* -->
+<section class="contact-sec" id="contact">
+  <div class="contact-info">
+    <div class="sec-label">Get in Touch</div>
+    <h2 class="sec-title">Let's Talk<br><span>Real Estate</span></h2>
+    <div class="gold-line"></div>
+    <div class="cdet"><span>📍</span><p>F-65, NPX Tower, Urbtech Mall,<br>Sector 153, Noida, UP 201301</p></div>
+    <div class="cdet"><span>📞</span><p><a href="tel:+917877529834">+91 78775 29834</a></p></div>
+    <div class="cdet"><span>💬</span><p><a href="https://wa.me/917877529834" target="_blank">Message us on WhatsApp</a></p></div>
+    <div class="cdet"><span>🕐</span><p>Mon–Sat: 9 AM to 7 PM<br>Sunday: By appointment</p></div>
+  </div>
+  <div class="form-box">
+    <h3>JS Infra Interest Form</h3>
+    <p class="form-sub">We will call you within 30 minutes.</p>
+    <form id="contactForm">
+      <div class="fg">
+        <label>Name</label>
+        <input type="text" id="cf_name" placeholder="Your name">
+      </div>
+      <div class="fg">
+        <label>Phone number *</label>
+        <input type="tel" id="cf_phone" placeholder="Your phone number" required>
+      </div>
+      <div class="fg">
+        <label>Your interest *</label>
+        <input type="text" id="cf_interest" placeholder="e.g. AVS City plots, Gaur Chrysalis, General enquiry" required>
+      </div>
+      <button type="submit" class="btn-gold" style="width:100%;text-align:center">Submit</button>
+      <div class="success-msg" id="contactSuccess">Thank you! We will call you within 30 minutes.</div>
+    </form>
+  </div>
+</section>
+
+<section class="partner-sec" id="partnership">
+  <div class="sec-label">Work With Us</div>
+  <h2 class="sec-title">Channel <span>Partner</span> Program</h2>
+  <div class="gold-line"></div>
+  <div class="partner-intro">
+    <h3>Earn More. Sell Premium. Grow Together.</h3>
+    <p>Join our network of 50+ active partners and earn great commissions on premium NCR projects. Brokers, agents, consultants — everyone is welcome.</p>
+    <a href="#partnerForm" class="btn-gold">Join the Network</a>
+  </div>
+  <div class="pb-grid">
+    <div class="pb-card"><div class="pb-icon">💰</div><h4>Good Pay</h4><p>Competitive commissions paid on time, every time.</p></div>
+    <div class="pb-card"><div class="pb-icon">🤝</div><h4>Full Support</h4><p>A dedicated person to help you with every deal.</p></div>
+    <div class="pb-card"><div class="pb-icon">🏆</div><h4>First Access</h4><p>Get into projects before they open to the public.</p></div>
+    <div class="pb-card"><div class="pb-icon">📊</div><h4>Training</h4><p>Regular training and ready-to-use marketing material.</p></div>
+    <div class="pb-card"><div class="pb-icon">⚡</div><h4>Quick Payment</h4><p>Your commission is released fast after every deal.</p></div>
+    <div class="pb-card"><div class="pb-icon">🌐</div><h4>Grow Your Network</h4><p>Connect with 50+ partners for referrals and co-brokerage.</p></div>
+  </div>
+  <div class="contest-box">
+    <h3>🏆 Performance Contests and Rewards</h3>
+    <p>We run regular contests to reward our top performers. Last time we gave away an iPhone. What's coming next is even bigger!</p>
+    <div class="rewards">
+      <div class="reward">🏅 Last Prize: iPhone Giveaway</div>
+      <div class="reward soon">✈️ Coming: Goa Trip</div>
+      <div class="reward soon">🏔️ Coming: Srinagar Trip</div>
+      <div class="reward soon">💵 Cash Rewards</div>
+    </div>
+    <p style="font-size:10px;color:#555;margin-top:10px">Based on deal performance. Terms apply.</p>
+  </div>
+
+  <!-- PARTNER FORM - Exact fields: Name, Phone number*, Mail id, Company Name, Website or any other link -->
+  <div class="form-box" id="partnerForm">
+    <h3>JS Infra Group Partnership</h3>
+    <p class="form-sub">We will get back to you within 24 hours.</p>
+    <form id="partnerForm2">
+      <div class="fg">
+        <label>Name</label>
+        <input type="text" id="pf_name" placeholder="Your name">
+      </div>
+      <div class="fg">
+        <label>Phone number *</label>
+        <input type="tel" id="pf_phone" placeholder="Your phone number" required>
+      </div>
+      <div class="fg">
+        <label>Mail id</label>
+        <input type="email" id="pf_email" placeholder="Your email address">
+      </div>
+      <div class="fg">
+        <label>Company Name</label>
+        <input type="text" id="pf_company" placeholder="Your company name">
+      </div>
+      <div class="fg">
+        <label>Website or any other link</label>
+        <input type="text" id="pf_website" placeholder="Website, Instagram, LinkedIn etc.">
+      </div>
+      <button type="submit" class="btn-gold" style="width:100%;text-align:center">Submit</button>
+      <div class="success-msg" id="partnerSuccess">Request received! We will contact you within 24 hours.</div>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">
+    <img src="https://raw.githubusercontent.com/Frosty09/JS-infra/main/logo.png" alt="JS Infra Group">
+    <p>JS Infra Group is a registered real estate company based in Uttar Pradesh. We help investors and home buyers find the right property in India's fastest growing corridors.</p>
+    <div class="social-links">
+      <a href="#" class="social-link">f</a>
+      <a href="#" class="social-link">in</a>
+      <a href="#" class="social-link">▶</a>
+      <a href="https://wa.me/917877529834" class="social-link" target="_blank">w</a>
+      <a href="#" class="social-link">li</a>
+    </div>
+  </div>
+  <div class="footer-cols">
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#portfolio">Our Portfolio</a></li>
+        <li><a href="#team">Our Team</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#partnership">Partner With Us</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Our Projects</h4>
+      <ul>
+        <li><a href="#avs">AVS City – Dankaur</a></li>
+        <li><a href="#portfolio">Gaur Chrysalis – Sec 22D</a></li>
+        <li><a href="#portfolio">Nimbus The Palm Village</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <p>F-65, NPX Tower, Urbtech Mall,<br>Sector 153, Noida, UP 201301<br><br>
+      <a href="tel:+917877529834">+91 78775 29834</a></p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 <span>JS Infra Group</span>. All Rights Reserved. | Registered in Uttar Pradesh, India</p>
+    <p style="margin-top:4px">Real Estate Development & Consultancy | Yamuna Expressway, NCR</p>
+  </div>
+</footer>
+
+<a href="https://wa.me/917877529834" class="float-wa" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<a href="tel:+917877529834" class="float-call">📞</a>
+
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup-box">
+    <button class="popup-close" onclick="closePopup()">✕</button>
+    <div class="popup-label">Free Offer</div>
+    <h3>Get a Free Site Visit!</h3>
+    <p class="popup-sub">Leave your details and our team will call you within 30 minutes.</p>
+    <form id="popupForm">
+      <div class="fg">
+        <label>Name</label>
+        <input type="text" id="pp_name" placeholder="Your name">
+      </div>
+      <div class="fg">
+        <label>Phone number *</label>
+        <input type="tel" id="pp_phone" placeholder="Your phone number" required>
+      </div>
+      <div class="fg">
+        <label>Your interest *</label>
+        <input type="text" id="pp_interest" placeholder="Which project are you interested in?" required>
+      </div>
+      <button type="submit" class="btn-gold" style="width:100%;text-align:center">Submit</button>
+      <div class="success-msg" id="popupSuccess">Great! We will call you shortly.</div>
+    </form>
+  </div>
+</div>
+
+<iframe name="gf_iframe" id="gf_iframe" style="display:none"></iframe>
+
+<script>
+// Contact Form → Google Sheet
+const CONTACT_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdXINmwmnEZr6jOD7IyKFMViLv00YHuX4GvQXjL5V11G8ltpQ/formResponse';
+// Partner Form → Google Sheet
+const PARTNER_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfepzPJbX4YZItjrxPmR25ntL4i_EStNWB50EayKzVjd9BC5A/formResponse';
+
+function submitGForm(url, data) {
+  const f = document.createElement('form');
+  f.method = 'POST';
+  f.action = url;
+  f.target = 'gf_iframe';
+  f.style.display = 'none';
+  Object.entries(data).forEach(([k, v]) => {
+    const inp = document.createElement('input');
+    inp.type = 'hidden';
+    inp.name = k;
+    inp.value = v;
+    f.appendChild(inp);
+  });
+  document.body.appendChild(f);
+  f.submit();
+  setTimeout(() => f.remove(), 2000);
+}
+
+// Contact form submit — fields: Name, Phone number, Your interest
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  submitGForm(CONTACT_URL, {
+    'entry.2005620554': document.getElementById('cf_name').value,
+    'entry.1045781291': document.getElementById('cf_phone').value,
+    'entry.1065046570': document.getElementById('cf_interest').value
+  });
+  document.getElementById('contactSuccess').style.display = 'block';
+  this.reset();
+});
+
+// Partner form submit — fields: Name, Phone number, Mail id, Company Name, Website or any other link
+document.getElementById('partnerForm2').addEventListener('submit', function(e) {
+  e.preventDefault();
+  submitGForm(PARTNER_URL, {
+    'entry.2005620554': document.getElementById('pf_name').value,
+    'entry.1045781291': document.getElementById('pf_phone').value,
+    'entry.839337160':  document.getElementById('pf_email').value,
+    'entry.1065046570': document.getElementById('pf_company').value,
+    'entry.561842835':  document.getElementById('pf_website').value
+  });
+  document.getElementById('partnerSuccess').style.display = 'block';
+  this.reset();
+});
+
+// Popup form submit
+document.getElementById('popupForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  submitGForm(CONTACT_URL, {
+    'entry.2005620554': document.getElementById('pp_name').value,
+    'entry.1045781291': document.getElementById('pp_phone').value,
+    'entry.1065046570': document.getElementById('pp_interest').value
+  });
+  document.getElementById('popupSuccess').style.display = 'block';
+  setTimeout(closePopup, 1800);
+  this.reset();
+});
+
+function openPopup() { document.getElementById('popupOverlay').classList.add('active'); }
+function closePopup() { document.getElementById('popupOverlay').classList.remove('active'); }
+document.getElementById('popupOverlay').addEventListener('click', function(e) { if(e.target===this) closePopup(); });
+setTimeout(() => { openPopup(); setInterval(openPopup, 120000); }, 15000);
+
+function switchCat(id, btn) {
+  document.querySelectorAll('.cat-content').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('cat-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('open'); }
+function closeMobile() { document.getElementById('mobileMenu').classList.remove('open'); }
+</script>
+</body>
+</html>
